@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/videos")
 @RequiredArgsConstructor
-public class VideoController {
+public class VideoController {//w4f
 
     private final VideoService videoService;
     @PostMapping
