@@ -1,5 +1,6 @@
 package com.youtube.Youtube.Clone.config;
 
+import com.amazonaws.regions.Region;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ public class AmazonS3Config {
 
         AmazonS3Client amazonS3Client = new AmazonS3Client(awsCredentials);
         amazonS3Client.withRegion(Regions.fromName(awsRegion));
+
 
         return amazonS3Client;
     }
