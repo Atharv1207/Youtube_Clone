@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FileSystemFileEntry} from 'ngx-file-drop'
+import {UploadVideoResponse} from "./upload-videos/UploadVideoResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class VideoService {
     formData.append('file', fileEntry, fileEntry.name);
 
 
-    this.httpClient.post("http://localhost:8080/api/videos", formData);
+    this.httpClient.post<UploadVideoResponse>("http://localhost:8080/api/videos", formData);
     return;
   }
 }

@@ -1,6 +1,7 @@
 package com.youtube.Youtube.Clone.controller;
 
 
+import com.youtube.Youtube.Clone.dto.UploadVideoResponse;
 import com.youtube.Youtube.Clone.dto.VideoDto;
 import com.youtube.Youtube.Clone.service.VideoService;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,9 @@ public class VideoController {
     private final VideoService videoService;
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void uploadVideo(@RequestParam("file")MultipartFile file){
+    public UploadVideoResponse uploadVideo(@RequestParam("file")MultipartFile file){
 
-        videoService.uploadVideo(file);
+        return videoService.uploadVideo(file);
     }
 
     @PutMapping
