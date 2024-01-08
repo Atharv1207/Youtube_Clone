@@ -6,11 +6,12 @@ import {HttpClientModule} from "@angular/common/http";
 import {NgxFileDropModule} from "ngx-file-drop";
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {HeaderComponent} from "./header/header.component";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, HttpClientModule, NgxFileDropModule, HeaderComponent],
+  imports: [CommonModule, RouterOutlet, FormsModule, HttpClientModule, NgxFileDropModule, HeaderComponent, FlexLayoutModule],
   templateUrl: './app.component.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   styleUrl: './app.component.css'
