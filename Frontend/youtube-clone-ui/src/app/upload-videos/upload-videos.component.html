@@ -1,0 +1,15 @@
+<div class="center">
+  <!-- Drag-and-drop section -->
+  <div ngxFileDrop
+       class="drop-area"
+       dropZoneLabel="Drop files here"
+       (onFileDrop)="onFileDropped($event)">
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+      Optional custom content that replaces the entire default content.
+      <button type="button" (click)="openFileSelector()">Browse Files</button>
+    </ng-template>
+  </div>
+
+  <!-- File input button -->
+  <input type="file" (change)="onFileSelected($event)" multiple>
+</div>
