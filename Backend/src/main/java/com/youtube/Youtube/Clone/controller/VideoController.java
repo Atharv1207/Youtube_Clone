@@ -33,5 +33,19 @@ public class VideoController {
     public String uploadThumbnail(@RequestParam("file") MultipartFile file, @RequestParam("videoId") String videoId){
         return videoService.uploadThumbnail(file, videoId);
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto getVideoDetails(@PathVariable String videoId){
+
+        return videoService.getVideoDetails(videoId);
+    }
+
+    @PostMapping("/{videoId}/like")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto likeVideo(@PathVariable String videoId){
+
+        return videoService.likedVideo(videoId);
+    }
 }
 

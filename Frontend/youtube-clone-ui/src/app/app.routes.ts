@@ -8,6 +8,9 @@ export const routes: Routes = [
   },
   {
     path: 'save-video-details/:videoId', component: SaveVideoDetailsComponent,
+  },
+  {
+    path: 'video-detail/:videoId',
   }
 ];
 

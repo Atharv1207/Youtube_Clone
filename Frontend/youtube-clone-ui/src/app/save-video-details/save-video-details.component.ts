@@ -4,6 +4,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {FormControl, FormGroup} from "@angular/forms";
 import{ReactiveFormsModule as NgModule} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-save-video-details',
@@ -23,7 +24,7 @@ export class SaveVideoDetailsComponent {
   videoStatus: FormControl = new FormControl('')
   saveVideoDetailsForm: FormGroup;
 
-  constructor() {
+  constructor(private matSnakckBar: MatSnackBar) {
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,
       description: this.description,

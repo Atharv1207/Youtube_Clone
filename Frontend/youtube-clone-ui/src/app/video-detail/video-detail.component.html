@@ -1,0 +1,17 @@
+<div fxLayout="row">
+  <div fxFlex = "65%" class="video-detail">
+    <app-video-player> *ngif="videoAvailable" [videoUrl]="videoUrl"<app-video-player>
+
+      <div fxLayout="row">
+        <div fxFlex="50%">
+          <span>{{videoDescription}}</span>
+        </div>
+      </div>
+  </div>
+  <div fxFlex="5%"></div>
+  <div fxFlex = "30%">
+    Suggestion Bar
+  </div>
+</div>
+
+

@@ -23,6 +23,7 @@ public class User {
     private String emailAddress;
     private Set<String> subscribedToUsers;
     private Set<String> subscribers;
+    private String sub;
     private List<String> videoHistory;
     private Set<String> likedVideos;
     private Set<String> dislikedVideos;
