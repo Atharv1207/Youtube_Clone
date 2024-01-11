@@ -2,6 +2,7 @@ package com.youtube.Youtube.Clone.service;
 
 
 import com.youtube.Youtube.Clone.model.User;
+import com.youtube.Youtube.Clone.model.Video;
 import com.youtube.Youtube.Clone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -45,5 +46,17 @@ public class UserService {
         User user = getCurrentUser();
         user.removeFromDislikeVideos(videoId);
         userRepository.save(user);
+    }
+
+    public void addToDislikedVideos(String videoId) {
+        User user = getCurrentUser();
+        user.addToDislikeVideos(videoId);
+        userRepository.save(user);
+    }
+
+    public void addVideoToHistory(String videoId) {
+        User currentUser = getCurrentUser();
+        currentUser.addToVideoHistory(videoId);
+        userRepository.save(currentUser);
     }
 }

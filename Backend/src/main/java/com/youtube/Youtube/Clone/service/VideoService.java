@@ -19,6 +19,7 @@ public class VideoService {
     private final UserService userService;
 
     private final VideoRepository videoRepository;
+
     public UploadVideoResponse uploadVideo(MultipartFile file){
         //upload video to S3
         String videoUrl = s3service.uploadFile(file);
@@ -31,6 +32,7 @@ public class VideoService {
     }
 
     public VideoDto editVideo(VideoDto videoDto){
+
         Video savedVideo = getVideoById(videoDto.getId());
         savedVideo.setTitle(videoDto.getTitle());
         savedVideo.setDescription(videoDto.getDescription());
@@ -54,24 +56,36 @@ public class VideoService {
 
     private Video getVideoById(String videoId){
         return videoRepository.findById(videoId).orElseThrow(() -> new IllegalArgumentException("Cannot find video by id " + videoId));
-
     }
 
     public VideoDto getVideoDetails(String videoId){
 
         Video savedVideo = getVideoById(videoId);
-        VideoDto videoDto = new VideoDto();
-        videoDto.setTitle(savedVideo.getTitle());
-        videoDto.setDescription(savedVideo.getDescription());
-        videoDto.setTags(savedVideo.getTags());
-        videoDto.setThumbnailUrl(savedVideo.getThumbnailUrl());
-        videoDto.setVideoStatus(savedVideo.getVideoStatus());
-        videoDto.setId(savedVideo.getId());
-        videoDto.setVideoUrl(savedVideo.getVideoUrl());
+        increaseVideoCount(savedVideo);
+        userService.addVideoToHistory(videoId);
 
-        return videoDto;
+        return mapToVideoDto(savedVideo);
     }
 
+    private VideoDto mapToVideoDto(Video videoById){
+
+        VideoDto videoDto = new VideoDto();
+        videoDto.setTitle(videoById.getTitle());
+        videoDto.setDescription(videoById.getDescription());
+        videoDto.setTags(videoById.getTags());
+        videoDto.setThumbnailUrl(videoById.getThumbnailUrl());
+        videoDto.setVideoStatus(videoById.getVideoStatus());
+        videoDto.setId(videoById.getId());
+        videoDto.setVideoUrl(videoById.getVideoUrl());
+        videoDto.setLikedCount(videoById.getLikes().get());
+        videoDto.setDislikedCount(videoById.getDislikes().get());
+        videoDto.setViewCount(videoById.getViewCount().get());
+        return videoDto;
+    }
+    private void increaseVideoCount(Video savedVideo){
+        savedVideo.incrementViewCount();
+        videoRepository.save(savedVideo);
+    }
 
     public VideoDto likeVideo(String videoId) {
 
@@ -92,19 +106,32 @@ public class VideoService {
             userService.addToLikedVideos(videoId);
         }
 
-        VideoDto videoDto = new VideoDto();
-        videoDto.setTitle(videoById.getTitle());
-        videoDto.setDescription(videoById.getDescription());
-        videoDto.setTags(videoById.getTags());
-        videoDto.setThumbnailUrl(videoById.getThumbnailUrl());
-        videoDto.setVideoStatus(videoById.getVideoStatus());
-        videoDto.setId(videoById.getId());
-        videoDto.setVideoUrl(videoById.getVideoUrl());
-        videoDto.setLikedCount(videoById.getLikes().get());
-        videoDto.setDislikedCount(videoById.getLikes().get());
+        videoById.incrementLikes();
+        userService.addToLikedVideos(videoId);
+        return mapToVideoDto(videoById);
+    }
+
+    public VideoDto dislikeVideo(String videoId) {
+
+        Video videoById = getVideoById(videoId);
+
+        if(userService.ifDisLikedVideo(videoId)){
+            videoById.decrementDislikes();
+            userService.removeFromDislikedVideos(videoId);
+        }
+        else if(userService.ifDisLikedVideo(videoId)){
+            videoById.decrementLikes();
+            userService.removeFromLikedVideos(videoId);
+            videoById.incrementDislikes();
+            userService.addToDislikedVideos(videoId);
+        }
+        else{
+            videoById.incrementDislikes();
+            userService.addToDislikedVideos(videoId);
+        }
 
         videoById.incrementLikes();
         userService.addToLikedVideos(videoId);
-        return videoDto;
+        return mapToVideoDto(videoById);
     }
 }

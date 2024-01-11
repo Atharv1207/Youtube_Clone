@@ -22,12 +22,12 @@ public class Video {
     private String title;
     private String description;
     private String userId;
-    private AtomicInteger likes;
-    private AtomicInteger dislikes;
+    private AtomicInteger likes = new AtomicInteger(0);
+    private AtomicInteger dislikes = new AtomicInteger(0);
     private Set<String> tags;
     private String videoUrl;
     private VideoStatus videoStatus;
-    private Integer viewCount;
+    private AtomicInteger viewCount = new AtomicInteger(0);
     private String thumbnailUrl;
     private List<Comment> commentList;
 
@@ -44,4 +44,7 @@ public class Video {
         this.dislikes.decrementAndGet();
     }
 
+    public void incrementViewCount() {
+        viewCount.incrementAndGet();
+    }
 }
