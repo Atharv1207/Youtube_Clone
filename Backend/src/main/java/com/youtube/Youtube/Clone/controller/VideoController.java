@@ -45,7 +45,7 @@ public class VideoController {
     @ResponseStatus(HttpStatus.OK)
     public VideoDto likeVideo(@PathVariable String videoId){
 
-        return videoService.likedVideo(videoId);
+        return videoService.likeVideo(videoId);
     }
 }
 

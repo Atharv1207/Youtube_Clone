@@ -26,4 +26,6 @@ public class VideoDto {
     private Integer viewCount;
     private String thumbnailUrl;
     private List<Comment> commentList;
+    private Integer likedCount;
+    private Integer dislikedCount;
 }

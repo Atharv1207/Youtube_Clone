@@ -16,6 +16,8 @@ public class VideoService {
     @Autowired
     private final S3service s3service;
 
+    private final UserService userService;
+
     private final VideoRepository videoRepository;
     public UploadVideoResponse uploadVideo(MultipartFile file){
         //upload video to S3
@@ -71,4 +73,38 @@ public class VideoService {
     }
 
 
+    public VideoDto likeVideo(String videoId) {
+
+        Video videoById = getVideoById(videoId);
+
+        if(userService.ifLikedVideo(videoId)){
+            videoById.decrementLikes();
+            userService.removeFromLikedVideos(videoId);
+        }
+        else if(userService.ifDisLikedVideo(videoId)){
+            videoById.decrementDislikes();
+            userService.removeFromDislikedVideos(videoId);
+            videoById.incrementLikes();
+            userService.addToLikedVideos(videoId);
+        }
+        else{
+            videoById.incrementLikes();
+            userService.addToLikedVideos(videoId);
+        }
+
+        VideoDto videoDto = new VideoDto();
+        videoDto.setTitle(videoById.getTitle());
+        videoDto.setDescription(videoById.getDescription());
+        videoDto.setTags(videoById.getTags());
+        videoDto.setThumbnailUrl(videoById.getThumbnailUrl());
+        videoDto.setVideoStatus(videoById.getVideoStatus());
+        videoDto.setId(videoById.getId());
+        videoDto.setVideoUrl(videoById.getVideoUrl());
+        videoDto.setLikedCount(videoById.getLikes().get());
+        videoDto.setDislikedCount(videoById.getLikes().get());
+
+        videoById.incrementLikes();
+        userService.addToLikedVideos(videoId);
+        return videoDto;
+    }
 }
