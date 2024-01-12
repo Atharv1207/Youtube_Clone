@@ -4,7 +4,6 @@ package com.youtube.Youtube.Clone.controller;
 import com.youtube.Youtube.Clone.dto.CommentDto;
 import com.youtube.Youtube.Clone.dto.UploadVideoResponse;
 import com.youtube.Youtube.Clone.dto.VideoDto;
-import com.youtube.Youtube.Clone.model.Video;
 import com.youtube.Youtube.Clone.service.UserService;
 import com.youtube.Youtube.Clone.service.VideoService;
 import lombok.RequiredArgsConstructor;

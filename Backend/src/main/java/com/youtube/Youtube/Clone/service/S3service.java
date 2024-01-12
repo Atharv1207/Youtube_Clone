@@ -18,9 +18,7 @@ import java.util.UUID;
 @Service
 public class S3service implements FileService{
 
-
     private final AmazonS3Client awsS3Client;
-
     public static final String BUCKET_NAME = "youtubeclonebucket123";
 
     @Override

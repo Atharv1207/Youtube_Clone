@@ -86,6 +86,7 @@ public class VideoService {
         videoDto.setViewCount(videoById.getViewCount().get());
         return videoDto;
     }
+
     private void increaseVideoCount(Video savedVideo){
         savedVideo.incrementViewCount();
         videoRepository.save(savedVideo);
