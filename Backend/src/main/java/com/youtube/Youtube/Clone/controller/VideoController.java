@@ -1,13 +1,19 @@
 package com.youtube.Youtube.Clone.controller;
 
 
+import com.youtube.Youtube.Clone.dto.CommentDto;
 import com.youtube.Youtube.Clone.dto.UploadVideoResponse;
 import com.youtube.Youtube.Clone.dto.VideoDto;
+import com.youtube.Youtube.Clone.model.Video;
+import com.youtube.Youtube.Clone.service.UserService;
 import com.youtube.Youtube.Clone.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/videos")
@@ -15,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class VideoController {
 
     private final VideoService videoService;
+
+    private final UserService userService;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UploadVideoResponse uploadVideo(@RequestParam("file")MultipartFile file){
@@ -28,7 +37,7 @@ public class VideoController {
         return videoService.editVideo(videoDto);
     }
 
-    @PostMapping
+    @PostMapping("/thumbnail")
     @ResponseStatus(HttpStatus.CREATED)
     public String uploadThumbnail(@RequestParam("file") MultipartFile file, @RequestParam("videoId") String videoId){
         return videoService.uploadThumbnail(file, videoId);
@@ -54,5 +63,30 @@ public class VideoController {
 
         return videoService.dislikeVideo(videoId);
     }
+
+    @PostMapping("/{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public void addComment(@PathVariable String videoId, @RequestBody CommentDto commentDto){
+        videoService.addComment(videoId, commentDto);
+    }
+
+    @GetMapping("/{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CommentDto> getAllComments(@PathVariable String videoId){
+        return videoService.getAllComments(videoId);
+    }
+
+    @GetMapping("/{videoId}/allVideos")
+    @ResponseStatus(HttpStatus.OK)
+    public List<VideoDto> getAllVideos(){
+        return videoService.getAllVideos();
+    }
+
+    @GetMapping("/{videoId}/history")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<String> getHistory(@PathVariable String userId){
+        return userService.userHistory(userId);
+    }
+
 }
 

@@ -2,13 +2,11 @@ package com.youtube.Youtube.Clone.service;
 
 
 import com.youtube.Youtube.Clone.model.User;
-import com.youtube.Youtube.Clone.model.Video;
 import com.youtube.Youtube.Clone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -58,5 +56,15 @@ public class UserService {
         User currentUser = getCurrentUser();
         currentUser.addToVideoHistory(videoId);
         userRepository.save(currentUser);
+    }
+
+    public Set<String> userHistory(String userId) {
+        User user = getUserById(userId);
+        return user.getVideoHistory();
+    }
+
+    private User getUserById(String userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("cannot find user"));
     }
 }
