@@ -2,7 +2,7 @@ import {
   CommonModule,
   NgIf,
   NgTemplateOutlet
-} from "./chunk-3LQ3ATOJ.js";
+} from "./chunk-LFYF74II.js";
 import {
   Component,
   ContentChild,
@@ -44,7 +44,7 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate,
   ɵɵviewQuery
-} from "./chunk-KDDKRQ6M.js";
+} from "./chunk-J6YQ6TO5.js";
 
 // node_modules/ngx-file-drop/fesm2022/ngx-file-drop.mjs
 var _c0 = ["fileSelector"];

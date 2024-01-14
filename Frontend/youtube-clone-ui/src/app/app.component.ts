@@ -28,8 +28,7 @@ import {VideoDto} from "./video.dto";
     MatSelectModule, MatOptionModule,
     ReactiveFormsModule,BrowserModule,
     VgCoreModule, VgControlsModule,
-    VgOverlayPlayModule, VgBufferingModule,
-    MatSnackBar],
+    VgOverlayPlayModule, VgBufferingModule],
   templateUrl: './app.component.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   styleUrl: './app.component.css'

@@ -87,5 +87,9 @@ public class VideoController {
         return userService.userHistory(userId);
     }
 
+    @GetMapping("/docker")
+    public String getDocker(){
+        return "you did it";
+    }
 }
 
